@@ -12,7 +12,7 @@ namespace CodeFirstAjax.Controllers
 
         public CustomerController(ApplicationContext context)
         {
-            this.context = context;  hghg 
+            this.context = context;  
         }
         public IActionResult Index()
         {
