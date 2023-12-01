@@ -1,0 +1,41 @@
+﻿@model CodeFirstAjax.Models.Customer;
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-6 offset-3">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="text-center text-primary">Edit Customer Details</h1>
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-action="Edit">
+                        <div class="form-group">
+                            <label asp-for="FirstName"></label>
+                            <input type="hidden" asp-for="ID" />
+                            <input type="text" asp-for="FirstName" class="form-control" placeholder="Enter FirstName" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="LastName"></label>
+                            <input type="text" asp-for="LastName" class="form-control" placeholder="Enter LastName" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Age"></label>
+                            <input type="number" asp-for="Age" class="form-control" placeholder="Enter Age" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Email"></label>
+                            <input type="text" asp-for="Email" class="form-control" placeholder="Enter Email" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Add" class="btn btn-sm btn-outline-success floatright" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,84 @@
+﻿@model IEnumerable<CodeFirstAjax.Models.Customer>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="~/js/site.js"></script>
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-8 offset-2">
+            <h1 class="text-center text-primary">Customer Details</h1>
+            <a class="btn btn-sm btn-success m-1" asp-controller="Customer" asp-action="Create">Create</a>
+           
+            <button class="btn btn-sm btn-info m-1" id="selectCustomerButton">Select Customer</button>
+
+            <select id="customerIdDropdown" class="form-control">
+                <option value="">Select Customer</option>
+                @foreach (var customer in Model)
+                {
+                    <option value="@customer.ID">@customer.FirstName</option>
+                }
+            </select>
+            <button id="getAddressBtn" class="btn btn-primary">Get Address</button>
+
+            <div id="address-container"></div>
+            
+            <p class="text-center text-success">@TempData["error"]</p>
+            <table class="table table-bordered">
+                <tr class="text-center">
+                    <th>CustomerID</th>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                    <th>Age</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+                @foreach(var result in Model)
+                {
+                    <tr class="text-center">
+                            <td>@(result.ID)</td>
+                            <td>@(result.FirstName)</td>
+                            <td>@(result.LastName)</td>
+                            <td>@(result.Age)</td>
+                            <td>@(result.Email)</td>
+                            <td>
+                            <a class="btn btn-sm btn-warning" asp-controller="Customer" asp-action="Edit" asp-route-id="@(result.ID)">Edit</a>
+                            <a class="btn btn-sm btn-danger" asp-controller="Customer" asp-action="Delete" asp-route-id="@(result.ID)">Delete</a>
+                            </td>
+
+                    </tr>
+                }
+            </table>
+        </div>
+        <div id="address-container">
+         </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#getAddressBtn').click(function () {
+            var customerId = $('#customerIdDropdown').val();
+            if (customerId) {
+                $.ajax({
+                    url: '@Url.Action("GetAddress", "Customer")',
+                    type: 'GET',
+                    data: { customerId: customerId },
+                    success: function (data) {
+                        $('#address-container').html(data);
+                    },
+                    error: function () {
+                        console.error('Error fetching address details.');
+                    }
+                });
+            } else {
+                console.error('Please select a customer.');
+            }
+        });
+    });
+</script>
